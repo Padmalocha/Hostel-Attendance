@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, send_file
 import json
 from datetime import datetime
-import openpyxl
-from openpyxl import Workbook
 import os
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
@@ -12,7 +10,43 @@ app = Flask(__name__)
 
 # Sample hostel and student data (edit this with your actual 50 students per hostel)
 students_data = {
-    'Hostel 1': [f'Student_{i}' for i in range(1, 51)],
+    'Hostel 1': [
+        "Dushmanta Sabar",
+        "Jubraj Naik",
+        "Pradeep Dharua",
+        "Aroprakash Barik",
+        "Kanha Bauri",
+        "Rituraj Biswal",
+        "Bibhrat Biswal",
+        "Likun Das",
+        "Manas Rout",
+        "Jeebanjyoti Bhuyan",
+        "Diptiranjan Dalai",
+        "Nirdosh Xess",
+        "Pradeep Nayak",
+        "Sunil Tandi",
+        "Jitu Soren",
+        "Saroj Barha",
+        "Sekhar Chandra Naik",
+        "Basudev Naik",
+        "Dharmendra Naik",
+        "Nikhilkumar Pattnayak",
+        "Pradeepkumar Bhatra",
+        "Chandrachuda Srichandan",
+        "Bharatkumar Majhi",
+        "Prasant Pradhan",
+        "Nibasis Naik",
+        "Bhagatram Tanti",
+        "Sandeep Sethy",
+        "Lambodhar Hansda",
+        "Umeshcharana Rana",
+        "Kedarkumar Rour",
+        "Sansadhar Mana",
+        "Chandra Hansdah",
+        "Manoj Maharana",
+        "Asish Behera",
+        "Pyushkumar Khara"
+    ],
     'Hostel 2': [f'Student_{i}' for i in range(51, 101)],
     'Hostel 3': [f'Student_{i}' for i in range(101, 151)],
     'Hostel 4': [f'Student_{i}' for i in range(151, 201)],
@@ -40,14 +74,27 @@ def index():
         pdf_file = f'attendance_{safe_hostel}{date_str}{time_str}.pdf'
         pdf_path = os.path.join(os.getcwd(), pdf_file)
 
+        # Count present and absent students
+        present_count = sum(1 for status in attendance.values() if status == "Present")
+        absent_count = sum(1 for status in attendance.values() if status == "Absent")
+
         pdf = SimpleDocTemplate(pdf_path, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
 
         story.append(Paragraph(f"Attendance Report - {hostel}", styles['Heading1']))
+        story.append(Paragraph('________________________________________________'))
         story.append(Paragraph(f"Date: {date_str} | Time: {time_str.replace('_', ':')}", styles['Normal']))
         story.append(Spacer(1, 12))
 
+        # Add summary counts
+        story.append(Paragraph(f"Total Students: {len(attendance)}", styles['Normal']))
+        story.append(Paragraph(f"Present: {present_count}", styles['Normal']))
+        story.append(Paragraph(f"Absent: {absent_count}", styles['Normal']))
+        story.append(Paragraph('________________________________________________'))
+        story.append(Spacer(1, 12))
+
+        # Add student-wise details
         for student, status in attendance.items():
             story.append(Paragraph(f"{student}: {status}", styles['Normal']))
 

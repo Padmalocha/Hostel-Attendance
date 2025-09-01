@@ -1,174 +1,163 @@
-/* === GLOBAL PAGE STYLE === */
+/* ===== Global Styles ===== */
 body {
+    margin: 0;
+    padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
-    color: #333;
-    animation: fadeIn 1s ease-in;
-}
-
-/* === HEADER === */
-h1 {
-    text-align: center;
-    color: #2c3e50;
-    font-size: 2.7rem;
-    margin-bottom: 25px;
-    animation: slideDown 0.8s ease-out;
-    position: relative;
-}
-
-h1::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    margin: 12px auto 0;
-    background: linear-gradient(90deg, #4CAF50, #2196F3);
-    border-radius: 2px;
-    animation: expandBar 1.2s ease-out;
-}
-
-/* === LABELS === */
-label {
-    font-size: 16px;
-    display: block;
-    margin: 12px 0 6px;
-    font-weight: 500;
-    color: #444;
-    opacity: 0;
-    animation: fadeInUp 0.6s forwards;
-}
-
-/* === DROPDOWN === */
-select {
-    padding: 12px;
-    font-size: 16px;
-    margin-bottom: 25px;
-    width: 100%;
-    border: 2px solid #4CAF50;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(6px);
-    transition: all 0.3s ease;
-}
-
-select:focus {
-    outline: none;
-    border-color: #2e7d32;
-    box-shadow: 0px 0px 10px rgba(46, 125, 50, 0.4);
-    transform: scale(1.02);
-}
-
-/* === STUDENT CONTAINER === */
-#students {
+    background: linear-gradient(135deg, #2b5876, #4e4376);
+    color: #fff;
+    min-height: 100vh;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;   /* Centers horizontally */
-    align-items: center;       /* Aligns vertically inside rows */
-    gap: 12px;                 /* Space between items */
-    margin-top: 20px;
-    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
 }
 
-/* === STUDENT LABELS === */
+/* ===== Header ===== */
+h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(90deg, #ff007f, #ffae00, #00e1ff, #9d4edd);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 25px;
+    animation: glowText 4s ease-in-out infinite;
+}
+
+@keyframes glowText {
+    0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    50% { text-shadow: 0 0 25px rgba(255,255,255,0.9); }
+}
+
+/* ===== Form Container ===== */
+form {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    width: 100%;
+    max-width: 550px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* ===== Select Box ===== */
+label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 500;
+    background: #fff;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+select:hover {
+    background: #f2f2f2;
+}
+
+/* ===== Students List ===== */
+.students {
+    margin-top: 20px;
+    text-align: left;
+}
+
 .student-label {
     display: flex;
     align-items: center;
-    justify-content: center;   /* Centers text + checkbox */
-    width: 220px;
-    padding: 12px 16px;
-    margin: 6px;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #ffffff, #f3f3f3);
+    padding: 14px 18px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.9);
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
-    transition: transform 0.25s ease, background 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+    color: #222;
+    border: 1px solid #ddd;
     cursor: pointer;
-    opacity: 0;
-    animation: fadeInUp 0.5s forwards;
+    transition: transform 0.6s ease, background 0.6s ease, color 0.6s ease;
+}
+
+.student-label:nth-child(even) {
+    background: linear-gradient(90deg, #fef9f9, #f7f7ff);
+}
+
+.student-label:hover {
+    background: linear-gradient(90deg, #ffe9e9, #e0f7ff);
+    transform: translateY(-4px);
+    color: #000;
 }
 
 .student-label input {
-    margin-left: 10px;
-    transform: scale(1.2);
+    transform: scale(1.3);
+    accent-color: #4CAF50; /* Green when checked */
 }
 
-/* === SUBMIT BUTTON === */
+/* ===== Submit Button ===== */
 button {
-    padding: 14px 28px;
-    background: linear-gradient(135deg, #4CAF50, #2e7d32);
+    background: linear-gradient(90deg, #ff6ec4, #7873f5);
     color: white;
     border: none;
-    border-radius: 12px;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: 700;
     cursor: pointer;
-    font-size: 18px;
-    font-weight: 600;
-    transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.4s ease;
-    display: block;
-    margin: 30px auto 15px;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    width: 100%;
+    margin-top: 20px;
 }
 
 button:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0px 6px 18px rgba(46, 125, 50, 0.4);
-    background: linear-gradient(135deg, #43a047, #1b5e20);
+    transform: scale(1.07);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 
-/* === SUCCESS MESSAGE === */
-.success {
-    color: #2e7d32;
-    font-weight: bold;
-    text-align: center;
-    background: rgba(232, 245, 233, 0.9);
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #a5d6a7;
-    margin-bottom: 20px;
-    animation: fadeInUp 0.8s ease-out;
-}
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.3rem;
+    }
 
-/* === DOWNLOAD BUTTON (PDF) === */
+    .student-label {
+        font-size: 1rem;
+        padding: 12px 15px;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+}
 .download-box {
     text-align: center;
-    margin-top: 25px;
-    animation: fadeInUp 0.9s ease-out;
+    margin-top: 20px;
 }
 
 .download-btn {
     display: inline-block;
-    padding: 14px 28px;
+    padding: 12px 25px;
     background: linear-gradient(135deg, #2196F3, #1565C0);
     color: white;
     text-decoration: none;
     font-weight: 600;
-    border-radius: 12px;
-    transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.4s ease;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .download-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0px 6px 18px rgba(33, 150, 243, 0.4);
-    background: linear-gradient(135deg, #1976d2, #0d47a1);
-}
-
-/* === ANIMATIONS === */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes expandBar {
-    from { width: 0; }
-    to { width: 80px; }
-}
-
-@keyframes fadeInUp {
-    from { transform: translateY(25px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 15px rgba(33, 150, 243, 0.4);
 }

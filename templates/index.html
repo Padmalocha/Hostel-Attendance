@@ -18,38 +18,43 @@
                         <label class="student-label">
                             ${student}
                             <input type="checkbox" name="present_${student}">
-                        </label><br>
+                        </label>
                     `;
                 });
             }
         }
 
-        // Load students for the first hostel on page load
         window.onload = function() {
             showStudents();
         };
     </script>
 </head>
 <body>
-    <h1>Hostel Student Attendance <br>(SVIM & SVCSM)</h1>
+    <header>
+        <h1><span>📒 Student Attendance</span></h1>
+    </header>
+
     {% if message %}
         <p class="success">{{ message }}</p>
     {% endif %}
-    <form method="POST">
-        <label for="hostel">Select Hostel/Session:</label>
-        <select id="hostel" name="hostel" onchange="showStudents()">
-            {% for h in hostels %}
-                <option value="{{ h }}">{{ h }}</option>
-            {% endfor %}
-        </select>
-        <br><br>
 
-        <div id="students">
+    <form method="POST" class="attendance-form">
+        <!-- Hostel Selection Box -->
+        <div class="hostel-box">
+            <label for="hostel" class="dropdown-label">🏠 Select Hostel/Session:</label>
+            <select id="hostel" name="hostel" onchange="showStudents()" class="dropdown">
+                {% for h in hostels %}
+                    <option value="{{ h }}">{{ h }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Student List -->
+        <div id="students" class="students">
             <!-- Students will be populated here dynamically -->
         </div>
 
-        <br>
-        <button type="submit">Submit Attendance</button>
+        <button type="submit" class="submit-btn">✅ Submit Attendance</button>
     </form>
 {% if pdf_url %}
     <div class="download-box">
