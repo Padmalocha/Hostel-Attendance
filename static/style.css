@@ -1,0 +1,174 @@
+/* === GLOBAL PAGE STYLE === */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
+    color: #333;
+    animation: fadeIn 1s ease-in;
+}
+
+/* === HEADER === */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2.7rem;
+    margin-bottom: 25px;
+    animation: slideDown 0.8s ease-out;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    margin: 12px auto 0;
+    background: linear-gradient(90deg, #4CAF50, #2196F3);
+    border-radius: 2px;
+    animation: expandBar 1.2s ease-out;
+}
+
+/* === LABELS === */
+label {
+    font-size: 16px;
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 500;
+    color: #444;
+    opacity: 0;
+    animation: fadeInUp 0.6s forwards;
+}
+
+/* === DROPDOWN === */
+select {
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    width: 100%;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0px 0px 10px rgba(46, 125, 50, 0.4);
+    transform: scale(1.02);
+}
+
+/* === STUDENT CONTAINER === */
+#students {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;   /* Centers horizontally */
+    align-items: center;       /* Aligns vertically inside rows */
+    gap: 12px;                 /* Space between items */
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* === STUDENT LABELS === */
+.student-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;   /* Centers text + checkbox */
+    width: 220px;
+    padding: 12px 16px;
+    margin: 6px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.25s ease, background 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeInUp 0.5s forwards;
+}
+
+.student-label input {
+    margin-left: 10px;
+    transform: scale(1.2);
+}
+
+/* === SUBMIT BUTTON === */
+button {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #4CAF50, #2e7d32);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.4s ease;
+    display: block;
+    margin: 30px auto 15px;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0px 6px 18px rgba(46, 125, 50, 0.4);
+    background: linear-gradient(135deg, #43a047, #1b5e20);
+}
+
+/* === SUCCESS MESSAGE === */
+.success {
+    color: #2e7d32;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(232, 245, 233, 0.9);
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #a5d6a7;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* === DOWNLOAD BUTTON (PDF) === */
+.download-box {
+    text-align: center;
+    margin-top: 25px;
+    animation: fadeInUp 0.9s ease-out;
+}
+
+.download-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #2196F3, #1565C0);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.4s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0px 6px 18px rgba(33, 150, 243, 0.4);
+    background: linear-gradient(135deg, #1976d2, #0d47a1);
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes expandBar {
+    from { width: 0; }
+    to { width: 80px; }
+}
+
+@keyframes fadeInUp {
+    from { transform: translateY(25px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

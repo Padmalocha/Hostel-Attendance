@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance App</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+        var students = {{ students_json | safe }};
+
+        function showStudents() {
+            var hostel = document.getElementById('hostel').value;
+            var studentDiv = document.getElementById('students');
+            studentDiv.innerHTML = ''; // Clear previous content
+
+            if (hostel && students[hostel]) {
+                students[hostel].forEach(function(student) {
+                    studentDiv.innerHTML += `
+                        <label class="student-label">
+                            ${student}
+                            <input type="checkbox" name="present_${student}">
+                        </label><br>
+                    `;
+                });
+            }
+        }
+
+        // Load students for the first hostel on page load
+        window.onload = function() {
+            showStudents();
+        };
+    </script>
+</head>
+<body>
+    <h1>Hostel Student Attendance <br>(SVIM & SVCSM)</h1>
+    {% if message %}
+        <p class="success">{{ message }}</p>
+    {% endif %}
+    <form method="POST">
+        <label for="hostel">Select Hostel/Session:</label>
+        <select id="hostel" name="hostel" onchange="showStudents()">
+            {% for h in hostels %}
+                <option value="{{ h }}">{{ h }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <div id="students">
+            <!-- Students will be populated here dynamically -->
+        </div>
+
+        <br>
+        <button type="submit">Submit Attendance</button>
+    </form>
+{% if pdf_url %}
+    <div class="download-box">
+        <a href="{{ url_for('download_file', filename=pdf_url) }}" class="download-btn">⬇ Download Attendance PDF</a>
+    </div>
+{% endif %}
+</body>
+</html>
