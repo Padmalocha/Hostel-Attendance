@@ -1,163 +1,423 @@
-/* ===== Global Styles ===== */
-body {
+/* /static/style.css */
+
+/* CSS Variables for consistent theming */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --border-radius: 8px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --font-family: 'Segoe UI', Arial, sans-serif;
+    --transition: all 0.3s ease;
+}
+
+/* Reset default styles */
+* {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #2b5876, #4e4376);
-    color: #fff;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     padding: 20px;
 }
 
-/* ===== Header ===== */
-h1 {
-    font-size: 3rem;
-    font-weight: 800;
+/* Header Styles */
+header {
     text-align: center;
-    background: linear-gradient(90deg, #ff007f, #ffae00, #00e1ff, #9d4edd);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-bottom: 25px;
-    animation: glowText 4s ease-in-out infinite;
-}
-
-@keyframes glowText {
-    0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-    50% { text-shadow: 0 0 25px rgba(255,255,255,0.9); }
-}
-
-/* ===== Form Container ===== */
-form {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 25px;
-    border-radius: 20px;
-    backdrop-filter: blur(12px);
-    width: 100%;
-    max-width: 550px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-/* ===== Select Box ===== */
-label {
-    font-size: 1.2rem;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 10px;
-}
-
-select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    font-weight: 500;
-    background: #fff;
-    color: #333;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
     margin-bottom: 20px;
 }
 
-select:hover {
-    background: #f2f2f2;
+header h1 {
+    font-size: 2.2rem;
+    color: var(--primary-color);
 }
 
-/* ===== Students List ===== */
+header h1 span {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+/* Time Display */
+.time-display {
+    font-size: 1.1rem; /* Slightly larger for prominence */
+    font-weight: 500; /* Bolder for professional look */
+    color: var(--primary-color); /* Matches primary theme (#007bff) */
+    background-color: white; /* Clean background */
+    padding: 12px 16px; /* Comfortable padding */
+    border: 1px solid #e0e0e0; /* Subtle border for definition */
+    border-radius: var(--border-radius); /* Consistent rounded corners */
+    box-shadow: var(--box-shadow); /* Subtle shadow for depth */
+    text-align: center;
+    width: 100%;
+    max-width: 600px; /* Matches form width */
+    margin-bottom: 15px; /* Slightly more spacing */
+    transition: var(--transition); /* Smooth hover effect */
+}
+
+.time-display:hover {
+    background-color: #f1f3f5; /* Subtle hover effect */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Success Message */
+.success {
+    background-color: var(--success-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Attendance Form */
+.attendance-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Hostel Selection Box */
+.hostel-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dropdown-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    background-color: white;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.dropdown:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Student List */
 .students {
-    margin-top: 20px;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 15px;
 }
 
+/* Custom Scrollbar for Webkit browsers */
+.students::-webkit-scrollbar {
+    width: 8px;
+}
+
+.students::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: var(--border-radius);
+}
+
+.students::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: var(--border-radius);
+}
+
+/* Student Label and Checkbox */
 .student-label {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(90deg, #ffffff, #f3f3f3);
-    padding: 14px 18px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    font-size: 1.15rem;
-    color: #222;
-    border: 1px solid #ddd;
+    justify-content: space-between; /* Positions checkbox on right, name on left */
+    gap: 12px;
+    padding: 12px 16px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
     cursor: pointer;
-    transition: transform 0.6s ease, background 0.6s ease, color 0.6s ease;
-}
-
-.student-label:nth-child(even) {
-    background: linear-gradient(90deg, #fef9f9, #f7f7ff);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .student-label:hover {
-    background: linear-gradient(90deg, #ffe9e9, #e0f7ff);
-    transform: translateY(-4px);
-    color: #000;
+    background-color: #f1f3f5;
+    border-color: var(--primary-color);
+    transform: translateX(4px);
 }
 
-.student-label input {
-    transform: scale(1.3);
-    accent-color: #4CAF50; /* Green when checked */
-}
-
-/* ===== Submit Button ===== */
-button {
-    background: linear-gradient(90deg, #ff6ec4, #7873f5);
-    color: white;
-    border: none;
-    padding: 14px 30px;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    font-weight: 700;
+.student-label input[type="checkbox"] {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 4px;
+    background-color: white;
     cursor: pointer;
-    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    position: relative;
+    transition: var(--transition);
+    order: 1; /* Moves checkbox to the right */
+}
+
+.student-label input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.student-label input[type="checkbox"]:checked::after {
+    content: '✔';
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.student-label input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* Submit Button */
+.submit-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 18px 28px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Download Box */
+.download-box {
     margin-top: 20px;
+    text-align: center;
 }
 
-button:hover {
-    transform: scale(1.07);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--success-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition);
 }
 
-/* ===== Responsive ===== */
+.download-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 2.3rem;
+    body {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .attendance-form {
+        padding: 15px;
+    }
+
+    .dropdown, .download-btn {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    .submit-btn {
+        font-size: 1.3rem;
+        padding: 16px 24px;
+        max-width: 100%;
+    }
+
+    .students {
+        max-height: 350px;
+        padding: 12px;
     }
 
     .student-label {
         font-size: 1rem;
-        padding: 12px 15px;
+        padding: 10px 12px;
+        gap: 10px;
     }
 
-    button {
+    .student-label input[type="checkbox"] {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .success {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+
+    .dropdown-label {
         font-size: 1rem;
-        padding: 12px 20px;
+    }
+
+    .students {
+        max-height: 300px;
+        padding: 10px;
+    }
+
+    .student-label {
+        font-size: 0.95rem;
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .student-label input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    .submit-btn {
+        font-size: 1.2rem;
+        padding: 14px 20px;
+        max-width: 100%;
     }
 }
-.download-box {
-    text-align: center;
-    margin-top: 20px;
+
+/* Accessibility Enhancements */
+:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
-.download-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    background: linear-gradient(135deg, #2196F3, #1565C0);
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+/* Student Label and Checkbox */
+.student-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Positions checkbox on right, name on left */
+    gap: 12px;
+    padding: 12px 16px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.student-label:hover {
+    background-color: #f1f3f5;
+    border-color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+.student-label input[type="checkbox"] {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+    order: 1; /* Moves checkbox to the right */
+}
+
+.student-label input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.student-label input[type="checkbox"]:checked::after {
+    content: '✔';
     color: white;
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 10px;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.download-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 5px 15px rgba(33, 150, 243, 0.4);
+.student-label input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }

@@ -5,11 +5,13 @@ import os
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
+import pytz  # Added for time zone support
 
 app = Flask(__name__)
 
-# Sample hostel and student data (edit this with your actual 50 students per hostel)
+# Sample hostel and student data (unchanged)
 students_data = {
+'Hostels':[],
     'Hostel 1': [
         "Dushmanta Sabar",
         "Jubraj Naik",
@@ -50,9 +52,9 @@ students_data = {
     'Hostel 2': [f'Student_{i}' for i in range(51, 101)],
     'Hostel 3': [f'Student_{i}' for i in range(101, 151)],
     'Hostel 4': [f'Student_{i}' for i in range(151, 201)],
-    'Hostel 5': [f'Student_{i}' for i in range(201, 251)]
+    'Hostel 5': [f'Student_{i}' for i in range(201, 251)],
+    'Hostel 6': [f'Student_{i}' for i in range(251, 301)]
 }
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -63,10 +65,12 @@ def index():
             status = 'Present' if f'present_{student}' in request.form else 'Absent'
             attendance[student] = status
 
-        # Get current date and time
-        now = datetime.now()
-        date_str = now.strftime('%Y-%m-%d')
-        time_str = now.strftime('%H_%M_%S')  # Replace colons with underscores for valid file name
+        # Get current date and time in IST
+        ist = pytz.timezone('Asia/Kolkata')
+        now = datetime.now(ist)
+        date_str = now.strftime('%Y-%m-%d')  # e.g., 2025-09-02
+        time_str = now.strftime('%H_%M_%S')  # For filename: e.g., 07_20_45
+        display_time_str = now.strftime('%I:%M:%S %p')  # For PDF display: e.g., 07:20:45 AM
 
         # Sanitize hostel name (replace spaces with underscores)
         safe_hostel = hostel.replace(' ', '_')
@@ -83,15 +87,15 @@ def index():
         story = []
 
         story.append(Paragraph(f"Attendance Report - {hostel}", styles['Heading1']))
-        story.append(Paragraph('________________________________________________'))
-        story.append(Paragraph(f"Date: {date_str} | Time: {time_str.replace('_', ':')}", styles['Normal']))
+        story.append(Paragraph(''))
+        story.append(Paragraph(f"Date: {date_str} | Time: {display_time_str}", styles['Normal']))  # Updated time format
         story.append(Spacer(1, 12))
 
         # Add summary counts
         story.append(Paragraph(f"Total Students: {len(attendance)}", styles['Normal']))
         story.append(Paragraph(f"Present: {present_count}", styles['Normal']))
         story.append(Paragraph(f"Absent: {absent_count}", styles['Normal']))
-        story.append(Paragraph('________________________________________________'))
+        story.append(Paragraph(''))
         story.append(Spacer(1, 12))
 
         # Add student-wise details
@@ -112,11 +116,9 @@ def index():
                            hostels=list(students_data.keys()),
                            students_json=json.dumps(students_data))
 
-
 @app.route('/download/<filename>')
 def download_file(filename):
     return send_file(filename, as_attachment=True)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -24,8 +24,28 @@
             }
         }
 
+        // Display current date and time in IST
+        function updateTime() {
+            var now = new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Kolkata',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
+            });
+            var timeDisplay = document.getElementById('current-time');
+            if (timeDisplay) {
+                timeDisplay.textContent = 'Report will include: ' + now;
+            }
+        }
+
         window.onload = function() {
             showStudents();
+            updateTime();
+            setInterval(updateTime, 1000); // Update time every second
         };
     </script>
 </head>
@@ -37,11 +57,19 @@
     {% if message %}
         <p class="success">{{ message }}</p>
     {% endif %}
+    {% if pdf_url %}
+        <div class="download-box">
+            <a href="{{ url_for('download_file', filename=pdf_url) }}" class="download-btn">⬇ Download Attendance PDF</a>
+        </div>
+    {% endif %}
+
+    <!-- Display current time -->
+    <p id="current-time" class="time-display"></p>
 
     <form method="POST" class="attendance-form">
         <!-- Hostel Selection Box -->
         <div class="hostel-box">
-            <label for="hostel" class="dropdown-label">🏠 Select Hostel/Session:</label>
+            <label for="hostel" class="dropdown-label">🏠 Select Hostel:</label>
             <select id="hostel" name="hostel" onchange="showStudents()" class="dropdown">
                 {% for h in hostels %}
                     <option value="{{ h }}">{{ h }}</option>
@@ -56,10 +84,5 @@
 
         <button type="submit" class="submit-btn">✅ Submit Attendance</button>
     </form>
-{% if pdf_url %}
-    <div class="download-box">
-        <a href="{{ url_for('download_file', filename=pdf_url) }}" class="download-btn">⬇ Download Attendance PDF</a>
-    </div>
-{% endif %}
 </body>
 </html>
