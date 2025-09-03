@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>📊 Admin Dashboard</h1>
+
+    <!-- Hostel + Date PDF Download Form -->
+    <form method="GET" action="">
+        <label for="hostel">Select Hostel:</label>
+        <select name="hostel" id="hostel" required>
+            <option value="">-- Select Hostel --</option>
+            {% for h in hostels %}
+                <option value="{{ h }}">{{ h }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="date">Select Date:</label>
+        <input type="date" name="date" id="date" required>
+
+        <button type="submit"
+                formaction="{{ url_for('download_pdf', hostel='__hostel__', date='__date__') }}"
+                onclick="
+                    let form=this.form;
+                    let hostel=form.hostel.value;
+                    let date=form.date.value;
+                    if(hostel && date){
+                        this.formAction='/admin/download/'+hostel+'/'+date;
+                    } else {
+                        alert('Please select hostel and date');
+                        return false;
+                    }
+                ">
+            ⬇ Download PDF
+        </button>
+    </form>
+
+    <h2>All Attendance Records</h2>
+    {% for record in records %}
+        <div class="record">
+            <p><b>Name:</b> {{ record.name if record.name else "N/A" }}</p>
+            <p><b>Hostel:</b> {{ record.hostel }}</p>
+            <p><b>Date:</b> {{ record.date }}</p>
+            <p><b>Time:</b> {{ record.time }}</p>
+            <p><b>Status:</b> {{ record.status }}</p>
+        </div>
+    {% endfor %}
+
+    <a href="{{ url_for('logout') }}"><button>🚪 Logout</button></a>
+</div>
+</body>
+</html>

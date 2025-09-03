@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>👤 User Dashboard</h1>
+
+   <h2>➕ Register New Student</h2>
+{% for hostel in hostels %}
+<br>
+    <a href="{{ url_for('register_student', hostel=hostel) }}">
+        <button>Register in {{ hostel }}</button>
+    </a><br>
+{% endfor %}
+
+
+    <br><a href="{{ url_for('attendance') }}"><button class="take_attendance">📝 Take Attendance</button></a>
+    <br><br><a href="{{ url_for('logout') }}"><button>🚪 Logout</button></a>
+</div>
+</body>
+</html>

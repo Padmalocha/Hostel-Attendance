@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take Attendance</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>📝 Take Attendance</h1>
+
+    <!-- Step 1: Select Hostel -->
+    <form method="POST" action="{{ url_for('attendance') }}">
+        <select name="hostel" required>
+            <option value="">-- Select Hostel --</option>
+            {% for h in hostels %}
+                <option value="{{ h }}" {% if selected_hostel == h %}selected{% endif %}>{{ h }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">➡ Show Students</button>
+    </form>
+
+    <!-- Step 2: Show Students -->
+    {% if students %}
+        <h2>📋 Students in {{ selected_hostel }}</h2>
+        {% for s in students %}
+            <a href="{{ url_for('mark_attendance', hostel=selected_hostel, student_name=s['name']) }}">
+                <button>🎥 Take Attendance for {{ s['name'] }}</button>
+            </a><br><br>
+        {% endfor %}
+    {% endif %}
+    <!-- Step 3: Show Results -->
+    {% if recognized %}
+        <h2>✅ Attendance Result</h2>
+        <p>{{ recognized }}</p>
+
+        {% if "❌" in recognized %}
+            <!-- 🔁 Retake button only if failed -->
+            <br>
+            <a href="{{ request.url }}">
+                <button>🔁 Retake</button>
+            </a>
+        {% endif %}
+    {% endif %}
+
+    <br><a href="{{ url_for('user_dashboard') }}">⬅ Back</a>
+</div>
+</body>
+</html>
